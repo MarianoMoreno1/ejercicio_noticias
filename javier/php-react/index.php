@@ -28,24 +28,59 @@
 // Desestructuramos los hooks de React que vamos a usar:
 // useState  → para guardar datos que pueden cambiar (índice, noticias, loading)
 // useEffect → para ejecutar código cuando algo cambia (fetch, resize, slide)
+// useCallback → memoriza funciones para no recrearlas en cada render
 // useRef    → para apuntar a un elemento del DOM sin causar re-render
-const { useState, useEffect, useRef } = React;
+const { useState, useEffect, useRef, useCallback } = React;
 
 // Cuántas cards se muestran en pantalla grande (se sobreescribe en mobile)
 const VISIBLE_DEFAULT = 6;
 
+
+/* ── COMPONENTE Modal ───────────────────────────────────────────────────────
+   Ventana emergente con la info completa de la noticia seleccionada.
+   Se cierra clickando el fondo, el botón X, o presionando Escape.
+────────────────────────────────────────────────────────────────────────── */
+function Modal({ item, onClose }) {
+    // Cerrar con Escape
+    useEffect(() => {
+        const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+        document.addEventListener('keydown', onKey);
+        return () => document.removeEventListener('keydown', onKey);
+    }, [onClose]);
+
+    // Bloquear scroll del body mientras el modal está abierto
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        return () => { document.body.style.overflow = ''; };
+    }, []);
+
+    return (
+        // Click en el backdrop cierra el modal
+        <div className="modal-backdrop" onClick={onClose}>
+            {/* stopPropagation evita que click adentro cierre el modal */}
+            <div className="modal-box" onClick={(e) => e.stopPropagation()}>
+                <button className="modal-close" onClick={onClose} aria-label="Cerrar">&#10005;</button>
+                <div className="modal-img">
+                    <img src={item.image} alt={item.title} />
+                </div>
+                <div className="modal-body">
+                    <h2 className="modal-title">{item.title}</h2>
+                    <p className="modal-summary">{item.summary}</p>
+                </div>
+            </div>
+        </div>
+    );
+}
 
 /* ── COMPONENTE NewsCard ────────────────────────────────────────────────────
    Recibe las props de UNA noticia y devuelve su HTML.
    No tiene estado propio — solo muestra lo que le pasan.
    JSX parece HTML pero es JS: className en vez de class, {} para expresiones.
 ────────────────────────────────────────────────────────────────────────── */
-function NewsCard({ title, summary, image }) {
+function NewsCard({ title, summary, image, onClick }) {
     return (
-        <article className="news-card">
+        <article className="news-card" onClick={onClick} style={{cursor:'pointer'}}>
             <div className="news-card__img-wrap">
-                {/* loading="lazy" = el browser no descarga la imagen hasta que
-                    esté cerca del viewport. Mejora velocidad de carga inicial */}
                 <img src={image} alt={title} loading="lazy" />
             </div>
             <div className="news-card__body">
@@ -62,8 +97,9 @@ function NewsCard({ title, summary, image }) {
    Maneja toda la lógica de navegación: índice actual, slide, dots, swipe.
 ────────────────────────────────────────────────────────────────────────── */
 function NewsCarousel({ news, visible = VISIBLE_DEFAULT }) {
-    // index = qué card está primera a la izquierda en este momento (empieza en 0)
-    const [index, setIndex] = useState(0);
+    const [index,    setIndex]    = useState(0);
+    // selected = null (cerrado) o el objeto noticia (abierto)
+    const [selected, setSelected] = useState(null);
 
     // trackRef apunta al div .carousel-track del DOM para moverlo con translateX
     const trackRef = useRef(null);
@@ -143,6 +179,7 @@ function NewsCarousel({ news, visible = VISIBLE_DEFAULT }) {
                                 title={item.title}
                                 summary={item.summary}
                                 image={item.image}
+                                onClick={() => setSelected(item)}
                             />
                         ))}
                     </div>
@@ -171,6 +208,11 @@ function NewsCarousel({ news, visible = VISIBLE_DEFAULT }) {
                     />
                 ))}
             </div>
+
+            {/* Modal: solo aparece si hay noticia seleccionada */}
+            {selected && (
+                <Modal item={selected} onClose={() => setSelected(null)} />
+            )}
         </section>
     );
 }

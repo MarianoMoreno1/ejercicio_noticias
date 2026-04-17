@@ -1,18 +1,9 @@
+import { useState }    from 'react';
 import { useCarousel } from './useCarousel';
 import { NewsCard }    from './NewsCard';
+import { Modal }       from './Modal';
 import styles          from './NewsCarousel.module.css';
 
-/**
- * NewsCarousel
- * Componente reutilizable de carrusel de noticias.
- *
- * Props:
- *   news  {Array}  — array de objetos { id, title, summary, image }
- *   title {string} — título de la sección (opcional)
- *
- * Uso:
- *   <NewsCarousel news={newsArray} title="Últimas Noticias" />
- */
 export function NewsCarousel({ news = [], title = 'Noticias' }) {
     const total = news.length;
 
@@ -23,6 +14,9 @@ export function NewsCarousel({ news = [], title = 'Noticias' }) {
         onTouchStart, onTouchEnd,
     } = useCarousel(total);
 
+    // null = cerrado, objeto noticia = abierto
+    const [selected, setSelected] = useState(null);
+
     if (total === 0) return <p className={styles.empty}>Sin noticias.</p>;
 
     return (
@@ -30,7 +24,6 @@ export function NewsCarousel({ news = [], title = 'Noticias' }) {
             <h2 className={styles.title}>{title}</h2>
 
             <div className={styles.wrapper}>
-                {/* ← Anterior */}
                 <button
                     className={styles.btn}
                     aria-label="Anterior"
@@ -40,7 +33,6 @@ export function NewsCarousel({ news = [], title = 'Noticias' }) {
                     &#8249;
                 </button>
 
-                {/* Viewport recorta overflow */}
                 <div className={styles.viewport}>
                     <div
                         className={styles.track}
@@ -54,12 +46,12 @@ export function NewsCarousel({ news = [], title = 'Noticias' }) {
                                 title={item.title}
                                 summary={item.summary}
                                 image={item.image}
+                                onClick={() => setSelected(item)}
                             />
                         ))}
                     </div>
                 </div>
 
-                {/* → Siguiente */}
                 <button
                     className={styles.btn}
                     aria-label="Siguiente"
@@ -70,7 +62,6 @@ export function NewsCarousel({ news = [], title = 'Noticias' }) {
                 </button>
             </div>
 
-            {/* Dots */}
             <div className={styles.dots}>
                 {Array.from({ length: pages }, (_, i) => (
                     <button
@@ -81,6 +72,11 @@ export function NewsCarousel({ news = [], title = 'Noticias' }) {
                     />
                 ))}
             </div>
+
+            {/* Modal: solo se renderiza si hay una noticia seleccionada */}
+            {selected && (
+                <Modal item={selected} onClose={() => setSelected(null)} />
+            )}
         </section>
     );
 }

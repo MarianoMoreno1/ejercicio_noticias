@@ -5,9 +5,9 @@ import styles from './NewsCarousel.module.css';
  * Presenta una sola noticia: imagen, título y resumen.
  * Props: { title, summary, image }
  */
-export function NewsCard({ title, summary, image }) {
+export function NewsCard({ title, summary, image, onClick }) {
     return (
-        <article className={styles.card}>
+        <article className={styles.card} onClick={onClick} style={{ cursor: 'pointer' }}>
             <div className={styles.cardImgWrap}>
                 <img src={image} alt={title} loading="lazy" />
             </div>

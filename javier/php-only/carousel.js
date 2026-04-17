@@ -106,6 +106,47 @@
         }
     });
 
+    /* ── Modal ── */
+    const backdrop   = document.getElementById('modalBackdrop');
+    const modalImg   = document.getElementById('modalImg');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalSum   = document.getElementById('modalSummary');
+    const modalClose = document.getElementById('modalClose');
+
+    function openModal(card) {
+        const img     = card.querySelector('img');
+        const title   = card.querySelector('.news-card__title');
+        const summary = card.querySelector('.news-card__summary');
+
+        modalImg.src       = img.src;
+        modalImg.alt       = img.alt;
+        modalTitle.textContent = title.textContent;
+        modalSum.textContent   = summary.textContent;
+
+        backdrop.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        backdrop.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    // Click en cualquier card abre el modal
+    cards.forEach(card => {
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', () => openModal(card));
+    });
+
+    // Cerrar: botón X, backdrop, o Escape
+    modalClose.addEventListener('click', closeModal);
+    backdrop.addEventListener('click', (e) => {
+        if (e.target === backdrop) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+    });
+
     /* ── Init ── */
     buildDots();
     render();

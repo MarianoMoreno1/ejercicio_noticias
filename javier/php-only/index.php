@@ -64,6 +64,20 @@ $total = count($news); // cuántas noticias hay en total
 
 <!-- carousel.js se carga AL FINAL del body para que cuando se ejecute
      el DOM ya esté completo y pueda encontrar los elementos por id -->
+<!-- Modal: oculto por defecto, carousel.js lo llena y muestra al clickar -->
+<div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal-box" id="modalBox">
+        <button class="modal-close" id="modalClose" aria-label="Cerrar">&#10005;</button>
+        <div class="modal-img">
+            <img id="modalImg" src="" alt="">
+        </div>
+        <div class="modal-body">
+            <h2 class="modal-title" id="modalTitle"></h2>
+            <p class="modal-summary" id="modalSummary"></p>
+        </div>
+    </div>
+</div>
+
 <script src="carousel.js"></script>
 </body>
 </html>
