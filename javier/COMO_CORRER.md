@@ -53,5 +53,22 @@ npm install
 
 ## Correr los 3 a la vez
 
+### Opción A — script automático (recomendado)
+
+**PowerShell:**
+```powershell
+.\javier\start-all.ps1
+```
+
+**Git Bash:**
+```bash
+bash javier/start-all.sh
+```
+
+Inicia los 3 proyectos en background. Logs quedan en `javier/logs/`.
+Parar: Enter (PowerShell) o Ctrl+C (Git Bash).
+
+### Opción B — manual
+
 Abrir 3 terminales separadas y correr uno en cada una.
 No se pisan porque usan puertos distintos (8001, 8002, 5173).
