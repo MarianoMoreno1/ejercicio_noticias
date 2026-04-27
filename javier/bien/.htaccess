@@ -1,0 +1,19 @@
+Options -Indexes
+
+# ── URLs limpias para el detalle de noticias ──────────────────────
+# /news/mi-slug → /news/detail.php?slug=mi-slug
+
+RewriteEngine On
+RewriteBase /
+
+# Redirige /news/[slug] → detail.php?slug=[slug]
+RewriteRule ^news/([a-z0-9\-]+)/?$ detail.php?slug=$1 [L,QSA]
+
+# Redirige /api/news → news.php (opcional, por si llamas via fetch desde JS)
+RewriteRule ^api/news/?$ news.php [L,QSA]
+
+# Protege archivos sensibles
+<Files ".env">
+    Order allow,deny
+    Deny from all
+</Files>

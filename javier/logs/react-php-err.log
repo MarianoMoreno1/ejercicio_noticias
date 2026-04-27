@@ -1,0 +1,7 @@
+[Thu Apr 23 11:38:44 2026] PHP 8.4.18 Development Server (http://localhost:8003) started
+[Thu Apr 23 11:39:55 2026] [::1]:55563 Accepted
+[Thu Apr 23 11:39:56 2026] [::1]:55563 [200]: GET /api.php
+[Thu Apr 23 11:39:56 2026] [::1]:55563 Closing
+[Thu Apr 23 11:39:56 2026] [::1]:57503 Accepted
+[Thu Apr 23 11:39:56 2026] [::1]:57503 [200]: GET /api.php
+[Thu Apr 23 11:39:56 2026] [::1]:57503 Closing

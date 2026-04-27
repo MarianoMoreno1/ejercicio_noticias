@@ -1,0 +1,13 @@
+[Thu Apr 23 11:38:44 2026] PHP 8.4.18 Development Server (http://localhost:8002) started
+[Thu Apr 23 11:55:21 2026] [::1]:63624 Accepted
+[Thu Apr 23 11:55:21 2026] [::1]:59265 Accepted
+[Thu Apr 23 11:55:21 2026] [::1]:63624 [200]: GET /
+[Thu Apr 23 11:55:21 2026] [::1]:63624 Closing
+[Thu Apr 23 11:55:21 2026] [::1]:59265 [200]: GET /style.css
+[Thu Apr 23 11:55:21 2026] [::1]:59265 Closing
+[Thu Apr 23 11:55:22 2026] [::1]:65141 Accepted
+[Thu Apr 23 11:55:24 2026] [::1]:65141 [200]: GET /api.php
+[Thu Apr 23 11:55:24 2026] [::1]:65141 Closing
+[Thu Apr 23 11:55:24 2026] [::1]:60569 Accepted
+[Thu Apr 23 11:55:24 2026] [::1]:60569 [200]: GET /favicon.ico
+[Thu Apr 23 11:55:24 2026] [::1]:60569 Closing
