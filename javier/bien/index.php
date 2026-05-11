@@ -299,7 +299,7 @@ new Swiper('#newsSwiper', {
     navigation: { prevEl: '#btn-prev', nextEl: '#btn-next' },
     pagination: { el: '.swiper-pagination', clickable: true },
     grabCursor: true,
-    loop: false,
+    loop: true,
     a11y: { prevSlideMessage: 'Noticia anterior', nextSlideMessage: 'Noticia siguiente' },
 });
 </script>
